@@ -137,7 +137,6 @@ public class DatabaseRecordCreator
 	{
 
         BufferedReader reader = null;
-        
 
         DBEntry b;												//creating variable to use the DBEntry class
         															//that was created.
@@ -166,8 +165,7 @@ public class DatabaseRecordCreator
         {
         	pstmt = c.prepareStatement(sql);					//preparing the sql statement to insert.
         	
-            reader = new BufferedReader(new InputStreamReader(new FileInputStream(csvFile)
-            	,"UTF-8"));
+            reader = new BufferedReader(new InputStreamReader(new FileInputStream(csvFile), "UTF-8"));
  
             for(String line; (line = reader.readLine()) != null;)				//for how big the file is
             {
@@ -224,9 +222,9 @@ public class DatabaseRecordCreator
         	{ e.printStackTrace();} 
         catch (SQLException e)
         	{ e.printStackTrace();}
-        finally													//finally; if prepared statement not
-        {															//equal to null.
-            if((pstmt != null))
+        finally													
+        {															// finally, if prepared statement not equal to null.
+            if (pstmt != null)
             {
                 try
                 { 
@@ -242,34 +240,27 @@ public class DatabaseRecordCreator
 	//This method gets the prepared statmenet and the instance of the DBEntry class
 		//to use the getter of each column and insert it to the prepared statement
     private static void insert(DBEntry b, PreparedStatement pstmt) throws SQLException 
-    {    	
-        pstmt.setString(1,b.getA());      				//inserting each getter of a specified column
-        pstmt.setString(2, b.getB());      					//and inserting it to the prepared statement.
-        pstmt.setString(3, b.getC());
-        pstmt.setString(4, b.getD());
-        pstmt.setString(5, b.getE());
-        pstmt.setString(6, b.getF());
-        pstmt.setString(7, b.getG());
-        pstmt.setString(8, b.getH());
-        pstmt.setString(9, b.getI());
-        pstmt.setString(10, b.getJ());
+	{
+		String[] values = {
+			b.getA(), b.getB(), b.getC(), b.getD(), b.getE(),
+			b.getF(), b.getG(), b.getH(), b.getI(), b.getJ()
+		};
 
-        pstmt.executeUpdate();							//executing prepared statement
+		for (int i = 0; i < values.length; i++)
+			pstmt.setString(i + 1, values[i]);
+
+		pstmt.executeUpdate();
     }
 
     //This method creates a log to place the statistics within it.
     private static void createStatisticsLog(int totalRecordsReceived, int incorrectRecords)
     {
-																			// A Logger object is used
-																				//to log messages for a 
-    	Logger statisticsLogger = Logger.getLogger("StatisticsLog"); 	//specific system or 
-    																			//application component.
-    															
-    	FileHandler statisticsFileHandler;							//setting a file handler
+																		// A Logger object is used to log messages for a 
+    	Logger statisticsLogger = Logger.getLogger("StatisticsLog"); 	//specific system or application component.						
+    	FileHandler statisticsFileHandler;								//setting a file handler
     			
     	try 
     	{
-    	 
     																			  //Setting handler
     		statisticsFileHandler = new FileHandler("Statistics-Log.log", true);	//to true = append
     		statisticsLogger.addHandler(statisticsFileHandler);						//data to file.
@@ -277,12 +268,13 @@ public class DatabaseRecordCreator
     																	//Print a brief summary
     		SimpleFormatter formatter = new SimpleFormatter();				//of the log record in a
     		statisticsFileHandler.setFormatter(formatter);					//human readable format.
+
+			int successfulRecords = (totalRecordsReceived - incorrectRecords); // calculating the number of successful records
     	 
     		String message = "\nFollowing are the statistics:\n\t- "    //Log an INFO message.
-    				+totalRecordsReceived +" records received.\n\t- "
-    				+(totalRecordsReceived - incorrectRecords) 			//subtracting to get
-    				+" records were successful.\n\t- "						//successful records
-    				+incorrectRecords+" records were invalid.";
+    				+ totalRecordsReceived + " records received.\n\t- "
+    				+ successfulRecords + " records were successful.\n\t- "
+    				+ incorrectRecords + " records were invalid.";
 
     		statisticsLogger.info(message);								//printing message
     				
@@ -292,35 +284,23 @@ public class DatabaseRecordCreator
     		{e.printStackTrace();} 
     }
     
-    
     //This method creates a new csv file; adds each record using an array list,
     	//and then closing the writer file.
     private static void badCSVFileLoader(String[] vals) throws IOException
     {
         String badCsvFile = "bad-CSV-Records.csv";						//creating bad csv record file name
         File newFile = new File(badCsvFile);
-        BufferedWriter writer = new BufferedWriter(new FileWriter(newFile,true));	//append each record
-        																				//and getting file
+        BufferedWriter writer = new BufferedWriter(new FileWriter(newFile,true));	//append each record and getting file
         
         List<String> badRecordArray = new ArrayList<>();					
-        
-        badRecordArray.add(vals[0]);									//adding records to each specified
-        badRecordArray.add(vals[1]);										//column.
-        badRecordArray.add(vals[2]);
-        badRecordArray.add(vals[3]);
-        badRecordArray.add(vals[4]);
-        badRecordArray.add(vals[5]);
-        badRecordArray.add(vals[6]);
-        badRecordArray.add(vals[7]);
-        badRecordArray.add(vals[8]);
-        badRecordArray.add(vals[9]);
+
+		for (int i = 0; i < vals.length; i++)			//adding records to each specified column.			
+			badRecordArray.add(vals[i]);
 
         String collect = badRecordArray.stream().collect(Collectors.joining(",")); //setting delimeter
         																				//to a comma.
-        writer.write(collect);											//writing records to bad csv record
-        																	//file.
-        writer.write("\n");												//setting new line for a new record
-
+        writer.write(collect + "\n");											//writing records to bad csv record file 
+																				// and setting new line for a new record
         writer.close();													//closing the writer file
     }
     
