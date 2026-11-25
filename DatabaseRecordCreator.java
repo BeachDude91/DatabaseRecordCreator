@@ -255,16 +255,12 @@ public class DatabaseRecordCreator
     //This method creates a log to place the statistics within it.
     private static void createStatisticsLog(int totalRecordsReceived, int incorrectRecords)
     {
-																			// A Logger object is used
-																				//to log messages for a 
-    	Logger statisticsLogger = Logger.getLogger("StatisticsLog"); 	//specific system or 
-    																			//application component.
-    															
-    	FileHandler statisticsFileHandler;							//setting a file handler
+																		// A Logger object is used to log messages for a 
+    	Logger statisticsLogger = Logger.getLogger("StatisticsLog"); 	//specific system or application component.						
+    	FileHandler statisticsFileHandler;								//setting a file handler
     			
     	try 
     	{
-    	 
     																			  //Setting handler
     		statisticsFileHandler = new FileHandler("Statistics-Log.log", true);	//to true = append
     		statisticsLogger.addHandler(statisticsFileHandler);						//data to file.
@@ -272,12 +268,14 @@ public class DatabaseRecordCreator
     																	//Print a brief summary
     		SimpleFormatter formatter = new SimpleFormatter();				//of the log record in a
     		statisticsFileHandler.setFormatter(formatter);					//human readable format.
+
+			int successfulRecords = (totalRecordsReceived - incorrectRecords); // calculating the number of successful records
     	 
     		String message = "\nFollowing are the statistics:\n\t- "    //Log an INFO message.
-    				+totalRecordsReceived +" records received.\n\t- "
-    				+(totalRecordsReceived - incorrectRecords) 			//subtracting to get
-    				+" records were successful.\n\t- "						//successful records
-    				+incorrectRecords+" records were invalid.";
+    				+totalRecordsReceived + " records received.\n\t- "
+    				+ successfulRecords
+    				+ " records were successful.\n\t- "
+    				+ incorrectRecords +" records were invalid.";
 
     		statisticsLogger.info(message);								//printing message
     				
@@ -287,15 +285,13 @@ public class DatabaseRecordCreator
     		{e.printStackTrace();} 
     }
     
-    
     //This method creates a new csv file; adds each record using an array list,
     	//and then closing the writer file.
     private static void badCSVFileLoader(String[] vals) throws IOException
     {
         String badCsvFile = "bad-CSV-Records.csv";						//creating bad csv record file name
         File newFile = new File(badCsvFile);
-        BufferedWriter writer = new BufferedWriter(new FileWriter(newFile,true));	//append each record
-        																				//and getting file
+        BufferedWriter writer = new BufferedWriter(new FileWriter(newFile,true));	//append each record and getting file
         
         List<String> badRecordArray = new ArrayList<>();					
 
@@ -304,10 +300,8 @@ public class DatabaseRecordCreator
 
         String collect = badRecordArray.stream().collect(Collectors.joining(",")); //setting delimeter
         																				//to a comma.
-        writer.write(collect);											//writing records to bad csv record
-        																	//file.
-        writer.write("\n");												//setting new line for a new record
-
+        writer.write(collect + "\n");											//writing records to bad csv record file 
+																				// and setting new line for a new record
         writer.close();													//closing the writer file
     }
     
