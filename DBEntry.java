@@ -16,20 +16,19 @@ public class DBEntry
 	public DBEntry(String a,String b, String c, String d, String e	//Full Constructor found here
 			, String f, String g, String h, String i, String j)			//that initializes columns A though J
 	{																	//to parameters for full constructor.
-		this.columnA = a;
-		this.columnB = b;
-		this.columnC = c;
-		this.columnD = d;
-		this.columnE = e;
-		this.columnF = f;
-		this.columnG = g;
-		this.columnH = h;
-		this.columnI = i;
-		this.columnJ = j;
+		columnA = a;
+		columnB = b;
+		columnC = c;
+		columnD = d;
+		columnE = e;
+		columnF = f;
+		columnG = g;
+		columnH = h;
+		columnI = i;
+		columnJ = j;
 	}
 	
 	//*** Getters and Setters found below ***
-
 	public String getA() 
 	{
 		return columnA;
