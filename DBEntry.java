@@ -7,8 +7,8 @@
 
 public class DBEntry 
 {
-	String columnA,columnB,columnC,columnD,columnE					//creating instances for columns 
-		,columnF,columnG,columnH,columnI,columnJ;						//A through J
+	private String columnA,columnB,columnC,columnD,columnE;					//creating instances for columns 
+	private String columnF,columnG,columnH,columnI,columnJ;						//A through J
 	
 	public DBEntry()												//Empty Constructor found here
 	{}
@@ -35,7 +35,7 @@ public class DBEntry
 	}
 	public void setA(String a) 
 	{
-		this.columnA = a;
+		columnA = a;
 	}
 
 	public String getB() 
@@ -44,7 +44,7 @@ public class DBEntry
 	}
 	public void setB(String b) 
 	{
-		this.columnB = b;
+		columnB = b;
 	}
 
 	public String getC() 
@@ -53,7 +53,7 @@ public class DBEntry
 	}
 	public void setC(String c) 
 	{
-		this.columnC = c;
+		columnC = c;
 	}
 
 	public String getD() 
@@ -71,7 +71,7 @@ public class DBEntry
 	}
 	public void setE(String e) 
 	{
-		this.columnE = e;
+		columnE = e;
 	}
 
 	public String getF() 
@@ -80,7 +80,7 @@ public class DBEntry
 	}
 	public void setF(String f) 
 	{
-		this.columnF = f;
+		columnF = f;
 	}
 
 	public String getG() 
@@ -89,7 +89,7 @@ public class DBEntry
 	}
 	public void setG(String g) 
 	{
-		this.columnG = g;
+		columnG = g;
 	}
 
 	public String getH() 
@@ -98,7 +98,7 @@ public class DBEntry
 	}
 	public void setH(String h) 
 	{
-		this.columnH = h;
+		columnH = h;
 	}
 
 	public String getI() 
@@ -107,7 +107,7 @@ public class DBEntry
 	}
 	public void setI(String i) 
 	{
-		this.columnI = i;
+		columnI = i;
 	}
 
 	public String getJ() 
@@ -116,7 +116,7 @@ public class DBEntry
 	}
 	public void setJ(String j) 
 	{
-		this.columnJ = j;
+		columnJ = j;
 	}
 	
 }
