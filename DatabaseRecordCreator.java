@@ -223,8 +223,8 @@ public class DatabaseRecordCreator
         catch (SQLException e)
         	{ e.printStackTrace();}
         finally													
-        {															// finally; if prepared statement notequal to null.
-            if((pstmt != null))
+        {															// finally, if prepared statement not equal to null.
+            if (pstmt != null)
             {
                 try
                 { 
@@ -272,10 +272,9 @@ public class DatabaseRecordCreator
 			int successfulRecords = (totalRecordsReceived - incorrectRecords); // calculating the number of successful records
     	 
     		String message = "\nFollowing are the statistics:\n\t- "    //Log an INFO message.
-    				+totalRecordsReceived + " records received.\n\t- "
-    				+ successfulRecords
-    				+ " records were successful.\n\t- "
-    				+ incorrectRecords +" records were invalid.";
+    				+ totalRecordsReceived + " records received.\n\t- "
+    				+ successfulRecords + " records were successful.\n\t- "
+    				+ incorrectRecords + " records were invalid.";
 
     		statisticsLogger.info(message);								//printing message
     				
